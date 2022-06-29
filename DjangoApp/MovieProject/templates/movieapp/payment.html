@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        {% include 'movieapp/navbar.html' %}
+        
+       <!--razorpay script code-->
+         
+        <form action="/placeorder/" method="POST">
+          {% csrf_token%}
+          <input type="text" name='amount' value="{{amount}}">
+     
+          <script    src="https://checkout.razorpay.com/v1/checkout.js"    
+          data-key="{{apiKey}}"   
+          data-amount="29935" 
+          data-currency="INR"
+          data-order_id="{{ordid}}"   
+          data-buttontext="Pay with Razorpay"    
+          data-name="BOOKMYSHOW"    
+          data-description="Book any show"    
+          data-image="https://example.com/your_logo.jpg"   
+          data-prefill.name="{{customer.user.username}}"    
+          data-prefill.email="{{customer.user.email}}"   
+          data-theme.color="#F37254">
+        </script><input type="hidden" custom="Hidden Element" name="hidden"></form>
+        </body>
+</html> 

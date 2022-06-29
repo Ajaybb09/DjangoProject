@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+
+</head>
+<body>
+<div>
+</div>
+<div class="container">
+<h1 align="center">OUR CLIENT</h1>
+<table class="table table-hover">
+    <thead>
+    <tr>
+
+        <td>Username</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Email</td>
+        <!--<td>Password</td>-->
+        <td>location</td>
+        <td>Contact Number</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in users %}
+    <tr>
+        <td>{{i.user.username}}</td>
+        <td>{{i.user.first_name}}</td>
+        <td>{{i.user.last_name}}</td>
+        <td>{{i.user.email}}</td>
+        <td hidden>{{i.user.password}}</td>
+
+        <td>{{i.location}}</td>
+        <td>{{i.number}}</td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+
+
+
+
+</table>
+
+
+
+
+</div>
+
+
+</body>
+</html>

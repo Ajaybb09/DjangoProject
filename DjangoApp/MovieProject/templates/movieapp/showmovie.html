@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+     
+    </head>
+    <div>
+      
+{% include 'movieapp/home.html' %}
+    </div>
+    <body>
+     <!--{{showmovie}}-->
+     {% comment %} <table border="1" cellpadding='5px' class="table table-striped table-hover">
+        <thead>
+          <tr> 
+          
+            <th></th>
+            <th>TYPE</th>
+            <th>LANGUAGE</th>
+            <th>DURATION</th>
+            <th>CAST</th>
+            <th>DESC</th>
+            <th>PRICE</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in showmovie %}
+        <tr>
+           
+            <td>
+              <label>{{i.name}}</label><br><br>
+              <img src='{{i.Image.url}}' height="150px" width="150">
+
+            
+            <td>{{i.type}}</td>
+            <td>{{i.language}}</td>
+            <td>{{i.duration}}</td>
+            <td>{{i.cast}}</td>
+            <td>{{i.description}}</td>
+            <td>{{i.Price}}</td>
+            <td>
+            <a href='/update/{{i.id}}'>Edit</a>
+            <a href="/delete/{{i.id}}">Delete</a>
+            </td>
+            
+        </td>
+        
+        {% endfor %}
+ {% endcomment %}
+ {% for i in showmovie %}
+
+ <div class="container mt-4">
+     <div class="card mb-2" style="max-width: 1150px;">
+   <div class="row g-1">
+     <div class="col-md-4" style="background-color: #8e8fe8">
+      <img src="{{i.Image.url}}" style="width: 300px; height: 20rem;" class="card-img-top img-fluid">
+     </div>
+     <div class="col-md-8">
+       <div class="card-body" style="background-color: pink">
+ 
+         <h5 class="card-title">{{ i.name }}</h5>
+         <p class="card-text">{{i.description}}
+
+         </p>
+         <p class="card-text"><small class="text-muted">Last booked 3 mins ago</small></p>
+           <p class="card-text"><b>Director: </b>{{i.director}} &nbsp;&nbsp;&nbsp;
+             <b>Type:</b>     &nbsp;{{i.type}}&nbsp;&nbsp;&nbsp;&nbsp;
+           <b>Price:</b> &nbsp;{{i.Price}}&nbsp;Rs
+           </p>
+           <br>
+           {% comment %} {% if perms.movieapp.addcart %} {% endcomment %}
+           <a href="#" class="addtocart" id="{{movie.id}}"><i class="fas fa-cart-plus"></i></a>
+             {% comment %} <a href="#" > class="addtocart" <i class="fas fa-cart-plus"></i></a> {% endcomment %}
+            {% comment %} {% endif %} {% endcomment %}
+            
+           {% comment %} {% if perms.movieapp.delete_movie %} {% endcomment %}
+
+            <a href="/update/{{i.id}}" class="btn btn-success" >Update</a>
+             <a href="/delete/{{i.id}}" class="btn btn-danger" >Delete</a>
+             {% comment %} {% endif %} {% endcomment %}
+       </div>
+     </div>
+   </div>
+ </div>
+     </div>
+ </div>
+ {% endfor %}
+ {% comment %} <script>
+  $(document).ready(function(){
+  $('.addtocart').click(function(){
+      alert('clicked')
+  {% comment %} $.ajax({
+ url:'/booking',
+ method:'GET' ,
+ data:{'movieid':$(this).attr('id')},
+ success:function()
+ {
+ alert('movie added to booking summary...')
+ },
+ error:function(){}, {% endcomment %}
+
+
+</script> 
+<script>
+  $(document).ready(function(){
+    $(".addtocart").click(function(){
+      var id=$(this).attr('id')
+     
+      $.ajax({
+        url:'/addcart',
+        method:'GET',
+        data:{'movieid':id},
+        success:function(){alert('Item added to the cart')}
+
+      })    
+    })
+  })
+</script>
+    </body>
+</html>

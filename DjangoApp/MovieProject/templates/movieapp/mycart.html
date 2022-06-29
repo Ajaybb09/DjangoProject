@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %} 
+<html>
+    {% include 'movieapp/header.html' %}
+    <head>
+        <style>
+        
+        </style>
+    </head>
+    <body>
+      {% if flag %}
+     
+      <form method='POST'>
+        {% csrf_token %} 
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">MOVIE</th>
+                <th scope="col">Price</th>
+                <th scope="col">Seats</th>
+                <th scope="col">Total Price</th>
+</tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+              <tr>
+                <td ><img src="{{item.movieobject.Image.url}}"  height="500" width="400px"> 
+                  <br><h4>{{item.movieobject.name}}</h4></td>
+                <td>{{item.movieobject.Price}}</td>
+               
+                <td ><input type="number" min='0'  value="{{item.number_of_ticket}}" cartid="{{item.id}}" class="qnt" id='qnt{{item.id}}'/></td>
+                <td ><input type="text" value=" {{item.totalprice}}" id="totalprice{{item.id}}" class='totalprice' /></td>
+                <td><a href="#">Delete</a></td>
+              </tr>
+              {% endfor %}
+            
+            </tbody>
+          </table>
+        
+          <label>Totalmount</label>
+          <input type="text" name='totalamount' id='totalamount' value='0.0'/>
+          <input type="submit"  value="Placeorder">
+          </form>
+          
+          {% else %}
+          <h1>Empty cart</h1>
+          {% endif  %}
+         <script>
+            $(document).ready(function(){
+              
+              $('.qnt').change(function(){
+                
+                quantity=$(this).val()
+                price=$(this).parent().prev().html()
+                
+                id=$(this).attr('cartid')
+               // $("#totalprice"+id).val(totalprice)
+               $.ajax({
+                 url:"/updatecart/",
+                 method:'POST',
+                 data:{'qnt':quantity,'price':price,'cid':id,'csrfmiddlewaretoken':'{{csrf_token}}'},
+                 success:function(response){
+                  $("#totalprice"+id).val(response.totalprice);                 
+                  $('#totalamount').val(response.totalam);
+                 },
+                 error:function(){}
+               })
+               
+              })
+            })
+          </script>
+    </body>
+    </html>
